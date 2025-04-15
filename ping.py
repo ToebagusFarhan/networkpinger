@@ -36,7 +36,7 @@ def ping_and_alert(target, lost_sound_file, restored_sound_file, interval=1):
                     print(f"Ping to {target} succeeded. Connection restored!")
                     stop_sound()  
                     play_sound_loop(restored_sound_file)  
-                    time.sleep(4.5)  
+                    time.sleep(2)  
                     stop_sound()  
                     connection_lost = False  
                 else:
