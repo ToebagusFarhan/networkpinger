@@ -12,6 +12,14 @@ def play_sound_loop(sound_file):
     except Exception as e:
         print(f"Sound error: {e}")
 
+def play_sound_once(sound_file):
+    try:
+        pygame.mixer.init()
+        pygame.mixer.music.load(sound_file)
+        pygame.mixer.music.play(0)  
+    except Exception as e:
+        print(f"Sound error: {e}")
+
 def stop_sound():
     try:
         pygame.mixer.music.stop()
@@ -44,6 +52,9 @@ def ping_and_alert(target, lost_sound_file, restored_sound_file, interval=1):
             else:  
                 if not connection_lost:  
                     print(f"Ping to {target} failed. Connection lost!")
+                    play_sound_once(dc_sound_file)
+                    time.sleep(2)
+                    stop_sound()
                     play_sound_loop(lost_sound_file)  
                     connection_lost = True 
                 
@@ -54,8 +65,10 @@ def ping_and_alert(target, lost_sound_file, restored_sound_file, interval=1):
 
 if __name__ == "__main__":
     target = "google.com"  
+    dc_sound_file = "assets/disconnected.mp3"
     lost_sound_file = "assets/box.mp3"  
     restored_sound_file = "assets/restored.mp3"  
+    
     
     # Verify sound files exist
     if not os.path.exists(lost_sound_file):
